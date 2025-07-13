@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const config = {
-  PORT: process.env.PORT || 8000,
+  PORT: process.env.APP_PORT || 8000,
 
   JWT_SECRET: process.env.JWT_SECRET || 'default_secret_key',
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '24h',

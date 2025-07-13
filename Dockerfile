@@ -10,7 +10,6 @@ COPY . .
 
 EXPOSE 8050
 
-
 ENV PORT=${APP_PORT:-8050}
 
 CMD ["npm", "start"]
