@@ -15,15 +15,25 @@
   "type": "module",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js",
+    "start:dev": "nodemon src/app.js"
   },
   "dependencies": {
+    "axios": "^1.10.0",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^16.3.1",
     "eslint": "^9.31.0",
     "express": "^5.1.0",
+    "form-data": "^4.0.3",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.1",
     "pretier": "^0.0.1",
     "prettier": "^3.6.2",
     "sequelize": "^6.37.7",
     "sqlite3": "^5.1.7"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
 }
