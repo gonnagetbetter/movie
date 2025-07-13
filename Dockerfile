@@ -8,8 +8,6 @@ RUN npm ci --only=production
 
 COPY . .
 
-EXPOSE 8050
-
-ENV PORT=${APP_PORT:-8050}
+EXPOSE ${APP_PORT}
 
 CMD ["npm", "start"]
