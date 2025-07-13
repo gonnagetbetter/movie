@@ -36,9 +36,9 @@ Movie.init(
       validate: {
         isIn: {
           args: [['VHS', 'DVD', 'Blu-ray', 'Digital']],
-          msg: "Format must be one of: VHS, DVD, Blu-ray, Digital"
-        }
-      }
+          msg: 'Format must be one of: VHS, DVD, Blu-ray, Digital',
+        },
+      },
     },
   },
   { sequelize, modelName: 'Movie' },
