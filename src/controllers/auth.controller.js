@@ -39,10 +39,6 @@ class AuthController {
         { transaction: t },
       );
 
-      if (!JWT_SECRET) {
-        throw new Error('JWT_SECRET is not defined in environment variables');
-      }
-
       const token = jwt.sign(
         { id: user.id, email: user.email, name: user.name },
         JWT_SECRET,
@@ -93,10 +89,6 @@ class AuthController {
           error: true,
           message: 'Invalid credentials',
         });
-      }
-
-      if (!JWT_SECRET) {
-        throw new Error('JWT_SECRET is not defined in environment variables');
       }
 
       const token = jwt.sign(
