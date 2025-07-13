@@ -1,6 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '../db';
-import { Movie } from './movie.model';
+import { sequelize } from '../db.js';
 
 export class Actor extends Model {}
 
@@ -10,5 +9,3 @@ Actor.init(
   },
   { sequelize, modelName: 'actor' },
 );
-
-Actor.belongsToMany(Movie, { through: 'ActorMovies' });

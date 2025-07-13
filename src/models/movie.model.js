@@ -1,6 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../db.js';
-import { Actor } from './actor.model';
 
 export class Movie extends Model {}
 
@@ -32,11 +31,15 @@ Movie.init(
       },
     },
     format: {
-      type: DataTypes.ENUM('VHS', 'DVD', 'Blu-ray', 'Digital'),
+      type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isIn: {
+          args: [['VHS', 'DVD', 'Blu-ray', 'Digital']],
+          msg: "Format must be one of: VHS, DVD, Blu-ray, Digital"
+        }
+      }
     },
   },
   { sequelize, modelName: 'Movie' },
 );
-
-Movie.belongsToMany(Actor, { through: 'ActorMovies' });

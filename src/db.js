@@ -1,13 +1,14 @@
 import { Sequelize } from 'sequelize';
+import { DB_DIALECT, DB_HOST } from './config.js';
 
 export const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  host: './dev.sqlite',
+  dialect: DB_DIALECT,
+  host: DB_HOST,
 });
 
 export const connectDB = async () => {
-  await sequelize.sync();
+  await sequelize.sync({ force: true });
 
   await sequelize.authenticate();
-  console.log('Connected to DB'.yellow.underline);
+  console.log('Connected to DB');
 };
