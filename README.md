@@ -65,17 +65,16 @@ The application will be available at:
 To build the Docker image, run the following command from the project root:
 
 ```bash
-docker build -t your_super_account/movies .
+docker build -t gonnagetbetter/movies .
 ```
 
-Replace `your_super_account` with your actual Docker Hub username or preferred image name prefix.
 
 ### Running the Docker Container
 
 To run the application in a Docker container:
 
 ```bash
-docker run --name movies -p 8000:8050 -e APP_PORT=8050 your_super_account/movies
+docker run --name movies -p 8000:8050 -e APP_PORT=8050 gonnagetbetter/movies
 ```
 
 This command:
