@@ -74,7 +74,13 @@ export const validateCreateMovie = [
     .isString()
     .withMessage('Title must be a string')
     .isLength({ min: 1, max: 255 })
-    .withMessage('Title must be between 1 and 255 characters'),
+    .withMessage('Title must be between 1 and 255 characters')
+    .custom((value) => {
+      if (value.trim().length === 0) {
+        throw new Error('Title cannot consist only of whitespace characters');
+      }
+      return true;
+    }),
 
   body('year')
     .notEmpty()
@@ -94,7 +100,15 @@ export const validateCreateMovie = [
     .isString()
     .withMessage('Actor name must be a string')
     .isLength({ min: 1, max: 255 })
-    .withMessage('Actor name must be between 1 and 255 characters'),
+    .withMessage('Actor name must be between 1 and 255 characters')
+    .matches(/^[A-Za-z\s\-\.,\']+$/)
+    .withMessage('Actor name can only contain letters and special characters like - , . \'')
+    .custom((value) => {
+      if (value.trim().length === 0) {
+        throw new Error('Actor name cannot consist only of whitespace characters');
+      }
+      return true;
+    }),
 
   handleValidationErrors,
 ];
@@ -107,7 +121,13 @@ export const validateUpdateMovie = [
     .isString()
     .withMessage('Title must be a string')
     .isLength({ min: 1, max: 255 })
-    .withMessage('Title must be between 1 and 255 characters'),
+    .withMessage('Title must be between 1 and 255 characters')
+    .custom((value) => {
+      if (value.trim().length === 0) {
+        throw new Error('Title cannot consist only of whitespace characters');
+      }
+      return true;
+    }),
 
   body('year')
     .optional()
@@ -125,7 +145,15 @@ export const validateUpdateMovie = [
     .isString()
     .withMessage('Actor name must be a string')
     .isLength({ min: 1, max: 255 })
-    .withMessage('Actor name must be between 1 and 255 characters'),
+    .withMessage('Actor name must be between 1 and 255 characters')
+    .matches(/^[A-Za-z\s\-\.,\']+$/)
+    .withMessage('Actor name can only contain letters and special characters like - , . \'')
+    .custom((value) => {
+      if (value.trim().length === 0) {
+        throw new Error('Actor name cannot consist only of whitespace characters');
+      }
+      return true;
+    }),
 
   handleValidationErrors,
 ];

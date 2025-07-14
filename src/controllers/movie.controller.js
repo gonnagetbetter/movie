@@ -108,8 +108,14 @@ export default class MovieController {
   async findOrCreateActor(actorsToCheck, transaction = null) {
     const actors = [];
     for (const actorName of actorsToCheck) {
+      const trimmedName = actorName.trim();
+
+      if (trimmedName.length === 0) {
+        continue;
+      }
+
       const [actor] = await Actor.findOrCreate({
-        where: { name: actorName },
+        where: { name: trimmedName },
         transaction,
       });
       actors.push(actor);
@@ -202,7 +208,7 @@ export default class MovieController {
         return res.status(200).json({ error: false, result: paginatedMovies });
       }
 
-      let sortField = 'id'; // Default to id
+      let sortField = 'id';
       if (sort === 'year') {
         sortField = 'year';
       } else if (sort === 'title') {

@@ -8,6 +8,13 @@ Movie.init(
     title: {
       type: DataTypes.STRING(255),
       allowNull: false,
+      validate: {
+        notOnlyWhitespace(value) {
+          if (value.trim().length === 0) {
+            throw new Error('Title cannot consist only of whitespace characters');
+          }
+        },
+      },
     },
     year: {
       type: DataTypes.INTEGER(),
