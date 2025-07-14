@@ -9,21 +9,9 @@ class AuthController {
     const t = await sequelize.transaction();
 
     try {
-      const { email, name, password, confirmPassword } = req.body;
+      const { email, name, password } = req.body;
 
-      if (!email || !name || !password || !confirmPassword) {
-        return res.status(400).json({
-          error: true,
-          message: 'Please provide needed credentials',
-        });
-      }
-
-      if (password !== confirmPassword) {
-        return res.status(400).json({
-          error: true,
-          message: 'Passwords do not match',
-        });
-      }
+      // Validation is now handled by express-validator middleware
 
       const existingUser = await User.findOne({ where: { email: email } });
       if (existingUser) {
@@ -72,12 +60,7 @@ class AuthController {
     try {
       const { email, password } = req.body;
 
-      if (!email || !password) {
-        return res.status(400).json({
-          error: true,
-          message: 'Please provide email and password',
-        });
-      }
+      // Validation is now handled by express-validator middleware
 
       const user = await User.findOne({ where: { email: email } });
       if (!user) {
