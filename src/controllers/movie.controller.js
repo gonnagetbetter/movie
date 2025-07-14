@@ -124,6 +124,7 @@ export default class MovieController {
         search,
         actor,
         title,
+        sort = 'id',
         order = 'ASC',
         limit = 20,
         offset = 0,
@@ -176,10 +177,20 @@ export default class MovieController {
         }
 
         combinedMovies.sort((a, b) => {
-          if (order.toUpperCase() === 'ASC') {
-            return a.title.localeCompare(b.title);
+          if (sort === 'year') {
+            return order.toUpperCase() === 'ASC'
+              ? a.year - b.year
+              : b.year - a.year;
+          } else if (sort === 'title') {
+            const titleA = a.title.toLowerCase();
+            const titleB = b.title.toLowerCase();
+            if (order.toUpperCase() === 'ASC') {
+              return titleA.localeCompare(titleB, 'uk-UA');
+            } else {
+              return titleB.localeCompare(titleA, 'uk-UA');
+            }
           } else {
-            return b.title.localeCompare(a.title);
+            return order.toUpperCase() === 'ASC' ? a.id - b.id : b.id - a.id;
           }
         });
 
@@ -191,15 +202,46 @@ export default class MovieController {
         return res.status(200).json({ error: false, result: paginatedMovies });
       }
 
-      const movies = await Movie.findAll({
-        where: whereCondition,
-        include: [includeCondition],
-        order: [['title', order]],
-        limit: limitNum,
-        offset: offsetNum,
-      });
+      let sortField = 'id'; // Default to id
+      if (sort === 'year') {
+        sortField = 'year';
+      } else if (sort === 'title') {
+        sortField = 'title';
+      }
 
-      res.status(200).json({ error: false, result: movies });
+      if (sortField === 'title') {
+        const allMovies = await Movie.findAll({
+          where: whereCondition,
+          include: [includeCondition],
+        });
+
+        allMovies.sort((a, b) => {
+          const titleA = a.title.toLowerCase();
+          const titleB = b.title.toLowerCase();
+
+          if (order.toUpperCase() === 'ASC') {
+            return titleA.localeCompare(titleB, 'uk-UA');
+          } else {
+            return titleB.localeCompare(titleA, 'uk-UA');
+          }
+        });
+
+        const paginatedMovies = allMovies.slice(
+          offsetNum,
+          offsetNum + limitNum,
+        );
+        return res.status(200).json({ error: false, result: paginatedMovies });
+      } else {
+        const movies = await Movie.findAll({
+          where: whereCondition,
+          include: [includeCondition],
+          order: [[sortField, order]],
+          limit: limitNum,
+          offset: offsetNum,
+        });
+
+        return res.status(200).json({ error: false, result: movies });
+      }
     } catch (error) {
       res.status(500).json({ error: true, message: error.message });
     }
