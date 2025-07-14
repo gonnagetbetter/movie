@@ -9,12 +9,19 @@ class AuthController {
     const t = await sequelize.transaction();
 
     try {
-      const { email, name, password } = req.body;
+      const { email, name, password, confirmPassword } = req.body;
 
-      if (!email || !name || !password) {
+      if (!email || !name || !password || !confirmPassword) {
         return res.status(400).json({
           error: true,
-          message: 'Please provide email, name, and password',
+          message: 'Please provide needed credentials',
+        });
+      }
+
+      if (password !== confirmPassword) {
+        return res.status(400).json({
+          error: true,
+          message: 'Passwords do not match',
         });
       }
 
