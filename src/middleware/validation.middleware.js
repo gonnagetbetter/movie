@@ -137,6 +137,13 @@ export const validateListMovies = [
 
   query('title').optional().isString().withMessage('Title must be a string'),
 
+  query('sort')
+    .optional()
+    .isString()
+    .withMessage('Sort must be a string')
+    .isIn(['id', 'title', 'year'])
+    .withMessage('Possible values: id, title, year'),
+
   query('order')
     .optional()
     .isIn(['ASC', 'DESC'])
