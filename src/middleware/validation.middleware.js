@@ -102,10 +102,14 @@ export const validateCreateMovie = [
     .isLength({ min: 1, max: 255 })
     .withMessage('Actor name must be between 1 and 255 characters')
     .matches(/^[A-Za-z\s\-\.,\']+$/)
-    .withMessage('Actor name can only contain letters and special characters like - , . \'')
+    .withMessage(
+      "Actor name can only contain letters and special characters like - , . '",
+    )
     .custom((value) => {
       if (value.trim().length === 0) {
-        throw new Error('Actor name cannot consist only of whitespace characters');
+        throw new Error(
+          'Actor name cannot consist only of whitespace characters',
+        );
       }
       return true;
     }),
@@ -147,10 +151,14 @@ export const validateUpdateMovie = [
     .isLength({ min: 1, max: 255 })
     .withMessage('Actor name must be between 1 and 255 characters')
     .matches(/^[A-Za-z\s\-\.,\']+$/)
-    .withMessage('Actor name can only contain letters and special characters like - , . \'')
+    .withMessage(
+      "Actor name can only contain letters and special characters like - , . '",
+    )
     .custom((value) => {
       if (value.trim().length === 0) {
-        throw new Error('Actor name cannot consist only of whitespace characters');
+        throw new Error(
+          'Actor name cannot consist only of whitespace characters',
+        );
       }
       return true;
     }),

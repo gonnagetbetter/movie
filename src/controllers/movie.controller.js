@@ -254,28 +254,28 @@ export default class MovieController {
   }
 
   parseMovies(text) {
-    const blocks = text.split(/\r?\n\s*\r?\n/);
+    const blocks = text.trim().split(/\r?\n\s*\r?\n/);
     const movies = [];
 
     for (const block of blocks) {
       const lines = block.split(/\r?\n/);
       const movieReq = {};
 
-      for (const line of lines) {
-        if (line.startsWith('Title:')) {
-          movieReq.title = line.replace('Title:', '').trim();
-        } else if (line.startsWith('Release Year:')) {
-          movieReq.year = parseInt(
-            line.replace('Release Year:', '').trim(),
-            10,
-          );
-        } else if (line.startsWith('Format:')) {
-          movieReq.format = line.replace('Format:', '').trim();
-        } else if (line.startsWith('Stars:')) {
+      for (let raw of lines) {
+        const line = raw.trimStart();
+
+        if (line.toLowerCase().startsWith('title:')) {
+          movieReq.title = line.slice(6).trim();
+        } else if (line.toLowerCase().startsWith('release year:')) {
+          movieReq.year = parseInt(line.slice(13).trim(), 10);
+        } else if (line.toLowerCase().startsWith('format:')) {
+          movieReq.format = line.slice(7).trim();
+        } else if (line.toLowerCase().startsWith('stars:')) {
           movieReq.actors = line
-            .replace('Stars:', '')
+            .slice(6)
             .split(',')
-            .map((actor) => actor.trim());
+            .map((actor) => actor.trim())
+            .filter(Boolean);
         }
       }
 

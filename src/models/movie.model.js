@@ -11,7 +11,9 @@ Movie.init(
       validate: {
         notOnlyWhitespace(value) {
           if (value.trim().length === 0) {
-            throw new Error('Title cannot consist only of whitespace characters');
+            throw new Error(
+              'Title cannot consist only of whitespace characters',
+            );
           }
         },
       },
@@ -41,7 +43,7 @@ Movie.init(
       allowNull: false,
       validate: {
         isIn: {
-          args: [['VHS', 'DVD', 'Blu-ray', 'Digital']],
+          args: [['VHS', 'DVD', 'Blu-Ray', 'Digital']],
           msg: 'Format must be one of: VHS, DVD, Blu-ray, Digital',
         },
       },
